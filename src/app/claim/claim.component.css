@@ -1,0 +1,38 @@
+.claim-page {
+    text-align: center;
+    position  : relative;
+    margin-top: 90px;
+}
+
+.expire-date {
+    margin-top   : 16px;
+    margin-bottom: 32px;
+}
+
+.claim-footer {
+    /* position: fixed;
+    bottom  : 16px;
+    left    : 0;
+    right   : 0; */
+}
+
+.claim-btn {
+    height: 40px;
+    width : 100px;
+    border-radius: 0;
+}
+
+.claim-input {
+    width : 320px;
+    height: 40px;
+}
+
+.err-hint{
+    background: #d02b2b;
+    color: #fff;
+    padding: 8px 12px;
+    display: inline-block;
+    margin: 12px auto;
+    border-radius: 8px;
+    font-size: 14px;
+}

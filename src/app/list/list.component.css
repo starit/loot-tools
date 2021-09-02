@@ -1,0 +1,25 @@
+.project-item {
+    color        : #fff;
+    box-shadow   : 0 4px 10px 0 rgb(20 19 34 / 3%), 0 0 10px 0 rgb(20 19 34 / 2%);
+    background   : #1d2138;
+    border       : 1px solid #424560;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    padding      : 12px 16px;
+    display      : flex;
+    align-items: center;
+    transition   : all .3s;
+
+
+
+}
+
+.project-item:hover {
+    background: #191c30;
+}
+
+.token {
+    height: 32px;
+    margin: 0 12px 0 0;
+
+}

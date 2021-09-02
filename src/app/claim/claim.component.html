@@ -1,0 +1,76 @@
+<ng-container *ngIf="!finishedLoadingRoot"> Loading... </ng-container>
+<ng-container *ngIf="finishedLoadingRoot">
+  <!-- <img src={{remoteTree.metadata.logoURL}} style="height: 128px;"> -->
+
+  <!-- <h1 style="margin-top: 0%;">{{remoteTree.metadata.name}}</h1> -->
+  <div class="claim-page">
+    <markdown
+      [data]="airdropInfo.description"
+      lineNumbers
+      emoji
+      katex
+    ></markdown>
+
+    <label for="claimAddressInput">Loot Token Id</label>
+    <div>
+      <input
+        class="claim-input"
+        id="claimAddressInput"
+        type="text"
+        [(ngModel)]="claimAddress"
+        (input)="claimAddress = $event.target.value"
+      />
+      <button class="claim-btn" (click)="clickCheck()">
+        <span *ngIf="checking"> Checking... </span>
+        <span *ngIf="!checking"> Check </span>
+      </button>
+    </div>
+
+    <div class="err-hint" *ngIf="errHint">
+      {{ errHint }}
+    </div>
+    <ng-container *ngIf="finishedCheckingClaim && !claimed">
+      <ng-container *ngIf="airdropInfo.tokenType === '20'">
+        <p>Claimable amount: {{ claimableAmount }} {{ claimTokenSymbol }}</p>
+      </ng-container>
+      <ng-container *ngIf="airdropInfo.tokenType === '721'">
+        <p>Claimable NFT ID: {{ claimableAmount }} of {{ claimTokenSymbol }}</p>
+      </ng-container>
+      <button (click)="clickClaim()">Claim</button>
+    </ng-container>
+
+    <p *ngIf="finishedCheckingClaim && claimed">
+      This address has already claimed from this airdrop.
+    </p>
+
+    <ng-container *ngIf="sweepEnabled">
+      <p>
+        It appears that you are the owner of this airdrop, and the airdrop has
+        expired. You can sweep the unclaimed tokens into your wallet.
+      </p>
+      <button (click)="clickSweep()">Sweep</button>
+    </ng-container>
+
+    <div class="expire-date">
+      <small>Please input your Loot Token Id to check</small>
+    </div>
+
+    <div class="claim-footer">
+      <a
+        target="_blank"
+        href="https://etherscan.io/address/{{
+          airdropInfo.contractAddress
+        }}"
+        ><small>View smart contract on Etherscan</small></a
+      >
+      <br />
+      <a
+        target="_blank"
+        href="https://etherscan.io/address/{{
+          airdropInfo.tokenAddress
+        }}"
+        ><small>View airdropped token on Etherscan</small></a
+      >
+    </div>
+  </div>
+</ng-container>

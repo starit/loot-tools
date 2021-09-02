@@ -1,0 +1,8 @@
+<svg id="Force_Symbol" data-name="Force Symbol" xmlns="http://www.w3.org/2000/svg" width="41" height="41" viewBox="0 0 41 41">
+  <circle id="Ellipse_1" data-name="Ellipse 1" cx="20.5" cy="20.5" r="20.5" fill="#fff"/>
+  <g id="Component_1_1" data-name="Component 1 – 1">
+    <circle id="Ellipse_2" data-name="Ellipse 2" cx="20.5" cy="20.5" r="20.5" fill="#121212"/>
+    <path id="Path_1" data-name="Path 1" d="M51.6,74.069H70.8a5.279,5.279,0,0,0-5.279-5.28H49.682Z" transform="translate(-39.386 -54.535)" fill="#fff"/>
+    <path id="Path_2" data-name="Path 2" d="M68.688,107.007H49.682a5.28,5.28,0,0,0,5.28,5.28H70.8Z" transform="translate(-39.386 -84.833)" fill="#fff"/>
+  </g>
+</svg>

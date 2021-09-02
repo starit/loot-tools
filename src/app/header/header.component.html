@@ -1,0 +1,20 @@
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; margin-bottom: 44px;">
+  <a routerLink="">
+    <!-- <img src="../../assets/logo.svg" class="logo" /> -->
+    <h1 style="font-family: -webkit-pictograph;">LootTools</h1>
+  </a>
+
+  <div>
+    <!-- <a style="margin-right: 10px;" routerLink="/profile/{{wallet.userAddress}}" *ngIf="wallet.connected">
+      My profile
+    </a> -->
+    <button (click)="connectWallet()">
+      <div *ngIf="wallet.connected">
+        {{wallet.userAddress.slice(0, 6)}}...{{wallet.userAddress.slice(-6)}}
+      </div>
+      <div *ngIf="!wallet.connected">
+        Connect Wallet
+      </div>
+    </button>
+  </div>
+</div>

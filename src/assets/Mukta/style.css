@@ -1,0 +1,17 @@
+@font-face{
+    font-family: 'Mukta';
+    font-weight: 400;
+    src: url('./Mukta-Regular.ttf');
+}
+
+@font-face{
+    font-family: 'Mukta';
+    font-weight: 700;
+    src: url('./Mukta-SemiBold.ttf');
+}
+
+@font-face{
+    font-family: 'Mukta';
+    font-weight: 800;
+    src: url('./Mukta-Bold.ttf');
+}
