@@ -14,7 +14,7 @@ export class Web3Enabled {
 
   constructor(public web3: Web3) {
     this.blocknativeAPIKey = 'e2bf7c41-0780-4662-8f06-2e81518ee9e2';
-    this.infuraKey = '6c91da2b084648ca8993a2abea405589';
+    this.infuraKey = 'e7ea0dec32a443f689a983d419ff08fe';
     this.infuraEndpoint = `https://mainnet.infura.io/v3/${this.infuraKey}`
     this.networkID = 1;
     this.state = {
