@@ -9,13 +9,24 @@ import { ContractService } from '../contract.service';
 
 const airdropList = [
   {
-    name: 'AdventureGold Airdrop',
+    id: 1,
+    name: 'AdventureGold Airdrop for Loot Holders',
     contractAddress: '0x32353A6C91143bfd6C7d363B546e62a9A2489A20',
     tokenAddress: '0x32353A6C91143bfd6C7d363B546e62a9A2489A20',
     tokenSymbol: 'AGLD',
     tokenType: '20',
     airdropAmount: '10000',
     description: 'AdventureGold Airdrop for Loot Holder'
+  },
+  {
+    id: 2,
+    name: 'LootRealm NFT Airdrop for Loot Holders',
+    contractAddress: '0x7AFe30cB3E53dba6801aa0EA647A0EcEA7cBe18d',
+    tokenAddress: '0x7AFe30cB3E53dba6801aa0EA647A0EcEA7cBe18d',
+    tokenSymbol: 'LootRealm',
+    tokenType: '721',
+    airdropAmount: '1',
+    description: 'Notice: this airdrop will charge 0.03 ETH as a fee. Message source: '
   },
 ]
 @Component({
@@ -49,7 +60,10 @@ export class ClaimComponent implements OnInit {
 
   async ngOnInit() {
     this.rootIPFSHash = this.activatedRoute.snapshot.paramMap.get('rootIPFSHash');
-    this.airdropInfo = airdropList[0]
+    const projectId = new BigNumber(this.rootIPFSHash).minus(1).toString()
+    console.log('this.rootIPFSHash', this.rootIPFSHash)
+    this.airdropInfo = airdropList[projectId]
+    console.log('airdropInfo', this.airdropInfo)
     this.claimTokenSymbol = this.airdropInfo.tokenSymbol
     // const readonlyWeb3 = this.wallet.readonlyWeb3();
     // if (this.rootIPFSHash === 'QmfERE8NSgN57iUahH4yjn3tBXGUCk8GLK3yi7vbq1JWXZ') {
@@ -111,16 +125,25 @@ export class ClaimComponent implements OnInit {
   }
 
   async getClaim(lootId: string, web3) {
-    // const checksumAddress = ethers.utils.getAddress(address);
-    const adventureGoldContract = this.contracts.getContract(this.airdropInfo.contractAddress, 'AdventureGold', web3)
-  
-    // const claim = await adventureGoldContract.methods.seasonClaimedByTokenId(0, checksumAddress).call()
-    const claimed = await adventureGoldContract.methods.seasonClaimedByTokenId(0, lootId).call()
-    this.claimed = claimed
-
-    console.log('[getClaim] claimed', claimed)
-
-    return !claimed
+    if (this.airdropInfo.id === 1) {
+      const adventureGoldContract = this.contracts.getContract(this.airdropInfo.contractAddress, 'AdventureGold', web3)
+      const claimed = await adventureGoldContract.methods.seasonClaimedByTokenId(0, lootId).call()
+      this.claimed = claimed
+      return !claimed
+    } else if (this.airdropInfo.id === 2) {
+      const contract = this.contracts.getContract(this.airdropInfo.contractAddress, 'LootRealm')
+      let claimed = false;
+      try {
+        const gas = await contract.methods.mintWithLoot(lootId).estimateGas({ value: web3.utils.toWei('0.03'), from: this.wallet.userAddress })
+      } catch(e) {
+        claimed = true
+        this.errHint = e.toString()
+        console.error(e)
+      }
+      console.log('claimed', claimed)
+      this.claimed = claimed
+    }
+    
     // const claim = await this.remoteTree.find(checksumAddress);
     // return claim;
   }
@@ -136,20 +159,9 @@ export class ClaimComponent implements OnInit {
 
     const readonlyWeb3 = this.wallet.readonlyWeb3();
 
+    
+    
     this.userClaim = await this.getClaim(lootId, readonlyWeb3);
-    // if (!this.userClaim) {
-    //   this.errHint = 'The provided address is not included in this airdrop.'
-    //   // this.wallet.displayGenericError(new Error());
-    //   this.checking = false
-    //   return;
-    // }
-    // 
-    // const astrodropContract = this.contracts.getContract(this.remoteTree.metadata.contractAddress, 'Astrodrop', readonlyWeb3);
-    // this.claimed = await astrodropContract.methods.isClaimed(this.userClaim.index).call();
-
-    // const tokenAddress = this.remoteTree.metadata.tokenAddress;
-    // const tokenContract = this.contracts.getERC20(tokenAddress, readonlyWeb3);
-    // this.claimTokenSymbol = await tokenContract.methods.symbol().call();
 
     if (!this.claimed) {
       // let tokenDecimals;
@@ -179,12 +191,27 @@ export class ClaimComponent implements OnInit {
       this.errHint = 'Please input a valid loot id'
       return false
     }
-    const adventureGoldContract = this.contracts.getContract(this.airdropInfo.contractAddress, 'AdventureGold')
-    const func = adventureGoldContract.methods.claimById(lootId)
 
-    this.wallet.sendTx(func, () => { }, () => { }, (error) => { this.wallet.displayGenericError(error) });
+    let func
+    if (this.airdropInfo.id === 1) {
+      const adventureGoldContract = this.contracts.getContract(this.airdropInfo.contractAddress, 'AdventureGold')
+      func = adventureGoldContract.methods.claimById(lootId)
+      this.wallet.sendTx(func, () => { }, () => { }, (error) => { this.wallet.displayGenericError(error) });
+    } else if (this.airdropInfo.id === 2) {
+      const contract = this.contracts.getContract(this.airdropInfo.contractAddress, 'LootRealm')
+      func = contract.methods.mintWithLoot(lootId)
+      const value = new BigNumber(0.03).shiftedBy(18).toString()
+      console.log(value)
+      this.wallet.sendTxWithValue(func, value, () => { }, () => { }, (error) => { this.wallet.displayGenericError(error) });
+    }
+
+    // this.wallet.sendTx(func, () => { }, () => { }, (error) => { this.wallet.displayGenericError(error) });
   }
 
   sweep() {
   }
 }
+function elseif(arg0: boolean) {
+  throw new Error('Function not implemented.');
+}
+

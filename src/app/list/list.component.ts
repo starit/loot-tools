@@ -18,6 +18,12 @@ export class ListComponent implements OnInit {
         address: '1',
         contractAddress: '0x32353A6C91143bfd6C7d363B546e62a9A2489A20',
       },
+      {
+        token: 'pickle.png',
+        name: 'LootRealms Airdrop',
+        address: '2',
+        contractAddress: '0x32353A6C91143bfd6C7d363B546e62a9A2489A20',
+      },
     ]
   }
 
