@@ -11,8 +11,8 @@
       katex
     ></markdown>
 
-    <label for="claimAddressInput">Loot Token Id</label>
-    <div>
+    <label *ngIf="hideOthers" for="claimAddressInput">Loot Token Id</label>
+    <div *ngIf="hideOthers">
       <input
         class="claim-input"
         id="claimAddressInput"
@@ -51,7 +51,7 @@
       <button (click)="clickSweep()">Sweep</button>
     </ng-container>
 
-    <div class="expire-date">
+    <div *ngIf="hideOthers" class="expire-date">
       <small>Please input your Loot Token Id to check</small>
     </div>
 

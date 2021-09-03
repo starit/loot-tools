@@ -9,6 +9,16 @@ import { ContractService } from '../contract.service';
 
 const airdropList = [
   {
+    id: 0,
+    name: 'Mint your pLoot',
+    contractAddress: '0x03ea00b0619e19759ee7ba33e8eb8e914fbf52ea',
+    tokenAddress: '0x03ea00b0619e19759ee7ba33e8eb8e914fbf52ea',
+    tokenSymbol: 'pLoot',
+    tokenType: '20',
+    airdropAmount: '1',
+    description: `Mint your pLoot now. <br /> More Details: <a href="https://plootproject.com/" target="_blank"> https://plootproject.com/</a>`
+  },
+  {
     id: 1,
     name: 'AdventureGold Airdrop for Loot Holders',
     contractAddress: '0x32353A6C91143bfd6C7d363B546e62a9A2489A20',
@@ -38,6 +48,8 @@ const airdropList = [
     airdropAmount: '1',
     description: '1:1 NFT Airdrop to Loot Holders. More Details: https://cloot.org/'
   },
+  
+  // plootproject.com
 ]
 @Component({
   selector: 'app-claim',
@@ -61,6 +73,7 @@ export class ClaimComponent implements OnInit {
   finishedCheckingClaim: boolean;
   expirationTime: string;
   sweepEnabled: boolean;
+  hideOthers: boolean;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -69,8 +82,9 @@ export class ClaimComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.hideOthers = false;
     this.rootIPFSHash = this.activatedRoute.snapshot.paramMap.get('rootIPFSHash');
-    const projectId = new BigNumber(this.rootIPFSHash).minus(1).toString()
+    const projectId = new BigNumber(this.rootIPFSHash).toString()
     console.log('this.rootIPFSHash', this.rootIPFSHash)
     this.airdropInfo = airdropList[projectId]
     console.log('airdropInfo', this.airdropInfo)
