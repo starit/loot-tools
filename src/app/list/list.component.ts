@@ -26,7 +26,7 @@ export class ListComponent implements OnInit {
       },
       {
         token: 'pickle.png',
-        name: 'CLoot Airdrop',
+        name: 'cLoot Airdrop',
         address: '3',
         contractAddress: '0xEde64fefF210f406BFf709E2f375611641C2A945',
       },
