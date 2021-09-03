@@ -28,6 +28,16 @@ const airdropList = [
     airdropAmount: '1',
     description: 'Notice: this airdrop will charge 0.03 ETH as a fee. (Please use at your own risk)'
   },
+  {
+    id: 3,
+    name: 'cLoot NFT Airdrop for Loot Holders',
+    contractAddress: '0xEde64fefF210f406BFf709E2f375611641C2A945',
+    tokenAddress: '0xEde64fefF210f406BFf709E2f375611641C2A945',
+    tokenSymbol: 'cLoot',
+    tokenType: '721',
+    airdropAmount: '1',
+    description: '1:1 NFT Airdrop to Loot Holders. More Details: https://cloot.org/'
+  },
 ]
 @Component({
   selector: 'app-claim',
@@ -81,14 +91,14 @@ export class ClaimComponent implements OnInit {
     // }
   }
 
-  async ngDoCheck(){
-    if(this.wallet.userAddress && this.oldUserAddress !== this.wallet.userAddress){
+  async ngDoCheck() {
+    if (this.wallet.userAddress && this.oldUserAddress !== this.wallet.userAddress) {
       // this.triggerCheck()
     }
   }
 
-  triggerCheck(){
-    if(!this.wallet.userAddress){
+  triggerCheck() {
+    if (!this.wallet.userAddress) {
       return
     }
     this.claimAddress = this.wallet.userAddress
@@ -135,15 +145,26 @@ export class ClaimComponent implements OnInit {
       let claimed = false;
       try {
         const gas = await contract.methods.mintWithLoot(lootId).estimateGas({ value: web3.utils.toWei('0.03'), from: this.wallet.userAddress })
-      } catch(e) {
+      } catch (e) {
         claimed = true
         this.errHint = e.toString()
         console.error(e)
       }
       console.log('claimed', claimed)
       this.claimed = claimed
+    } else if (this.airdropInfo.id === 3) {
+      const contract = this.contracts.getContract(this.airdropInfo.contractAddress, 'CLoot')
+      let claimed = false;
+      try {
+        const owner = await contract.methods.ownerOf(lootId).call()
+        claimed = true
+      } catch (e) {
+        claimed = false
+      }
+      this.claimed = claimed
+      console.log('claimed', claimed)
     }
-    
+
     // const claim = await this.remoteTree.find(checksumAddress);
     // return claim;
   }
@@ -159,8 +180,8 @@ export class ClaimComponent implements OnInit {
 
     const readonlyWeb3 = this.wallet.readonlyWeb3();
 
-    
-    
+
+
     this.userClaim = await this.getClaim(lootId, readonlyWeb3);
 
     if (!this.claimed) {
@@ -203,6 +224,10 @@ export class ClaimComponent implements OnInit {
       const value = new BigNumber(0.03).shiftedBy(18).toString()
       console.log(value)
       this.wallet.sendTxWithValue(func, value, () => { }, () => { }, (error) => { this.wallet.displayGenericError(error) });
+    } else if (this.airdropInfo.id === 3) {
+      const contract = this.contracts.getContract(this.airdropInfo.contractAddress, 'CLoot')
+      func = contract.methods.claim(lootId)
+      this.wallet.sendTx(func, () => { }, () => { }, (error) => { this.wallet.displayGenericError(error) });
     }
 
     // this.wallet.sendTx(func, () => { }, () => { }, (error) => { this.wallet.displayGenericError(error) });

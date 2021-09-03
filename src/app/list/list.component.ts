@@ -22,8 +22,15 @@ export class ListComponent implements OnInit {
         token: 'pickle.png',
         name: 'LootRealms Airdrop',
         address: '2',
-        contractAddress: '0x32353A6C91143bfd6C7d363B546e62a9A2489A20',
+        contractAddress: '0x7AFe30cB3E53dba6801aa0EA647A0EcEA7cBe18d',
       },
+      {
+        token: 'pickle.png',
+        name: 'CLoot Airdrop',
+        address: '3',
+        contractAddress: '0xEde64fefF210f406BFf709E2f375611641C2A945',
+      },
+
     ]
   }
 
