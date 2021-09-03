@@ -26,7 +26,7 @@ const airdropList = [
     tokenSymbol: 'LootRealm',
     tokenType: '721',
     airdropAmount: '1',
-    description: 'Notice: this airdrop will charge 0.03 ETH as a fee. Message source: '
+    description: 'Notice: this airdrop will charge 0.03 ETH as a fee. (Please use at your own risk)'
   },
 ]
 @Component({
