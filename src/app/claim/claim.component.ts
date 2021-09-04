@@ -10,13 +10,13 @@ import { ContractService } from '../contract.service';
 const airdropList = [
   {
     id: 0,
-    name: 'Mint your pLoot',
+    name: "People's Loot(pLoot)",
     contractAddress: '0x03ea00b0619e19759ee7ba33e8eb8e914fbf52ea',
     tokenAddress: '0x03ea00b0619e19759ee7ba33e8eb8e914fbf52ea',
     tokenSymbol: 'pLoot',
     tokenType: '20',
     airdropAmount: '1',
-    description: `Mint your pLoot now. <br /> More Details: <a href="https://plootproject.com/" target="_blank"> https://plootproject.com/</a>`
+    description: `<img src="assets/ploot.png" width="200" align=center /> <br />pLoot is powered by one of the most active communities - punk173. <br /> <br /> For More Info: <br /> <a href="https://plootproject.com/" target="_blank"> https://plootproject.com/</a>`,
   },
   {
     id: 1,
