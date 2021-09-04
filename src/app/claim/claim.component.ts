@@ -82,12 +82,17 @@ export class ClaimComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.hideOthers = false;
+    
     this.rootIPFSHash = this.activatedRoute.snapshot.paramMap.get('rootIPFSHash');
     const projectId = new BigNumber(this.rootIPFSHash).toString()
     console.log('this.rootIPFSHash', this.rootIPFSHash)
     this.airdropInfo = airdropList[projectId]
     console.log('airdropInfo', this.airdropInfo)
+    
+    this.hideOthers = false
+    if (this.airdropInfo.id === 0) {
+      this.hideOthers = true
+    }
     this.claimTokenSymbol = this.airdropInfo.tokenSymbol
     // const readonlyWeb3 = this.wallet.readonlyWeb3();
     // if (this.rootIPFSHash === 'QmfERE8NSgN57iUahH4yjn3tBXGUCk8GLK3yi7vbq1JWXZ') {
